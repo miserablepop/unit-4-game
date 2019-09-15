@@ -1,6 +1,6 @@
 # unit-4-game
 
-### Option Two: Star Wars RPG Game (Challenge)
+### Star Wars RPG Game (Challenge)
 
 Here's how the app works:
 
