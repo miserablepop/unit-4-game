@@ -32,7 +32,7 @@ body {
 }
 
 .image {
-    width: 75%;
+    width: 200px;
     height: 200px;
     display: block;
     margin: auto;
@@ -41,6 +41,11 @@ body {
 #characters {
     width: 100%;
     display: inline-block;
+}
+
+#remainingDefenders {
+	width:100%;
+	display: inline-block;
 }
 
 .characterName, .characterHealth {
@@ -55,7 +60,7 @@ body {
 	font-size: 20px;
 }
 
-.chosenCharacter, .currentEnemy {
+.chosenCharacter, .currentDefender {
 	font-family: 'Space Mono', monospace;
 	font-size: 40px;
 	clear:all;
@@ -65,12 +70,12 @@ body {
 	margin: 10px auto;
 }
 
-.enemy {
+.defender {
 	font-family: 'Space Mono', monospace;
 	font-size: 40px;
 	clear:all;
 	text-align: center;
 	display:inline-block;
-	width:250px;
-	margin: 20px auto;
+	width:200px;
+	margin: 10px 90px;
 }

@@ -55,6 +55,7 @@ $(document).ready(function() {
     var characters = [];
 
     var $chosenCharacter;
+    var $currentDefender;
 
     // FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////////
@@ -62,6 +63,8 @@ $(document).ready(function() {
     function startGame (){
         createCharacters(charactersObjects);
         pickCharacter();
+        pickDefender();
+        
     };
 
 
@@ -92,13 +95,13 @@ $(document).ready(function() {
         else if (arg.length <= 3) {
 
             // Empty out the remaining enemies div
-            $('#remainingEnemies').empty();
+            $('#remainingDefenders').empty();
 
             // Set characters to an empty array
             characters = [];
 
             // Appending a "Remaining Enemies" title
-            $('#remainingEnemies').append('<div class="title">Remaining Enemies:</div>')
+            $('#remainingDefenders').append('<div class="title">Enemies Available to Attack:</div>')
             
             for (var i = 0; i < arg.length; i++){   
                 // Creating jQuery object to store the defender (remaining enemies) div
@@ -106,13 +109,13 @@ $(document).ready(function() {
                 $defender.append('<div class="characterName">'+ arg[i].charName);
                 $defender.append(arg[i].charImage);
                 $defender.append('<div class="characterHealth">'+arg[i].healthPoints);
-                $defender.attr('class', 'enemy');
+                $defender.attr('class', 'defender');
 
                 // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
 
                 // Appending the defender object to the characters section
-                $('#remainingEnemies').append($defender);
+                $('#remainingDefenders').append($defender);
             }
         }
         
@@ -143,8 +146,12 @@ $(document).ready(function() {
         });
     };
 
+    function pickDefender (){
+        $('.defender').on('click', function(){
 
-
+            alert("Hello World!");
+        });
+    };
 
     startGame();
 });
