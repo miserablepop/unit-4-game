@@ -21,7 +21,36 @@ body {
     text-align: center;
 }
 
+.character {
+	font-family: 'Space Mono', monospace;
+	font-size: 40px;
+	float: left;
+	text-align: center;
+	display: block;
+	width: 200px;
+	margin: 10px 0;
+}
+
+.image {
+    width: 75%;
+    height: 200px;
+    display: block;
+    margin: auto;
+}
+
 #characters {
     width: 100%;
     display: inline-block;
+}
+
+.characterName, .characterHealth {
+	color: white;
+    width:100%;
+    font-size: 50%;
+	margin: 0 auto;
+}
+
+.characterHealth {
+    font-family: 'Space Mono', monospace;
+	font-size: 20px;
 }
