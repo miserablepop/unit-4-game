@@ -35,7 +35,7 @@ $(document).ready(function() {
         counterPoints: 10,
         charImage: '<img src="assets/images/characters/lobot.png" class="image" >'
     };
-
+ 
     // lando object
     var lando = {
         nickname: 'lando',
@@ -51,8 +51,10 @@ $(document).ready(function() {
     // Setting character objects array
     var charactersObjects = [bobaFett, hanSolo, lobot, lando];
     
+    // Setting characters empty array
     var characters = [];
 
+    var $chosenCharacter;
 
     // FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////////
@@ -120,7 +122,11 @@ $(document).ready(function() {
             // Once a character is selected, clear out the div
             $('#characters').empty();
 
+            // Appending a new title 
             $('#characters').append('<div class="title">Your Character:</div>');
+
+            $chosenCharacter = $(this);
+            console.log($chosenCharacter);
         });
     };
 
