@@ -59,27 +59,70 @@ $(document).ready(function() {
 
     function startGame (){
         createCharacters(charactersObjects);
+        pickCharacter();
     };
 
 
     function createCharacters (arg){
+
         if (arg.length === 4){
             for (var i=0; i < arg.length; i++){
+
+                // Creating jQuery object to store the character div
                 var $attacker = $('<div id='+arg[i].nickname+'>');
                 $attacker.append('<div class="characterName">'+ arg[i].charName);
                 $attacker.append(arg[i].charImage);
                 $attacker.append('<div class="characterHealth">'+arg[i].healthPoints);
                 $attacker.attr('class', 'character col-md-3');
 
+                // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
+
+                // Appending the attacker object to the characters section
                 $('#characters').append($attacker);
 
             }
+        } 
+        
+        else if (arg.length <= 3) {
+
+            // Empty out the remaining enemies div
+            $('#remainingEnemies').empty();
+
+            // Set characters to an empty array
+            characters = [];
+
+            // Appending a "Remaining Enemies" title
+            $('#remainingEnemies').append('<div class="title">Remaining Enemies</div>')
+            
+            for (var i = 0; i < arg.length; i++){   
+                // Creating jQuery object to store the defender (remaining enemies) div
+                var $defender = $('<div id='+arg[i].nickname+'>');
+                $defender.append('<div class="characterName">'+ arg[i].charName);
+                $defender.append(arg[i].charImage);
+                $defender.append('<div class="characterHealth">'+arg[i].healthPoints);
+                $defender.attr('class', 'character col-md-3');
+
+                // Pushing the character nickname to the characters array
+                characters.push(arg[i].nickname);
+
+                // Appending the defender object to the characters section
+                $('#characters').append($defender);
+            }
         }
+        
         
     };
 
-    
+    function pickCharacter (){
+        $('.character').on('click', function(){
+
+            // Once a character is selected, clear out the div
+            $('#characters').empty();
+
+            $('#characters').append('<div class="title">Your Character:</div>');
+        });
+    };
 
 
 
