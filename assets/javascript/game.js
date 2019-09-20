@@ -57,6 +57,8 @@ $(document).ready(function() {
     var $chosenCharacter;
     var $currentDefender;
 
+    var isDefender = false;
+
     // FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -64,7 +66,7 @@ $(document).ready(function() {
         createCharacters(charactersObjects);
         pickCharacter();
         pickDefender();
-        
+
     };
 
 
@@ -110,16 +112,16 @@ $(document).ready(function() {
                 $defender.append(arg[i].charImage);
                 $defender.append('<div class="characterHealth">'+arg[i].healthPoints);
                 $defender.attr('class', 'defender');
+                $defender.attr('data_hp', arg[i].healthPoints);
+                $defender.attr('data_nickname', arg[i].nickname);
 
                 // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
-
+                console.log($defender);
                 // Appending the defender object to the characters section
                 $('#remainingDefenders').append($defender);
             }
-        }
-        
-        
+        }  
     };
 
     function pickCharacter (){
@@ -147,9 +149,19 @@ $(document).ready(function() {
     };
 
     function pickDefender (){
-        $('.defender').on('click', function(){
+        $('#remainingDefenders').on('click', '.defender', function(event){
+            
+            $('#characters').empty();
+            $('#currentDefender').empty();
+            $('attackButton').empty();
 
-            alert("Hello World!");
+            $currentDefender = $(this);
+            $currentDefender.addClass('currentDefender');
+            $currentDefender.removeClass('defender');
+            
+            $('#chosenCharacter').append($chosenCharacter);
+            $('#attackButton').append('<button type="button" class="btn btn-light">Attack</button>');
+            $('#currentDefender').append($currentDefender);
         });
     };
 
