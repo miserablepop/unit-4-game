@@ -11,7 +11,7 @@ $(document).ready(function() {
         nickname: 'boba',
         charName: 'Boba Fett',
         healthPoints: 110,
-        attackPoints: 20,
+        attackPoints: 8,
         counterPoints: 15,
         charImage: '<img src="assets/images/characters/bobafett.png" class="image" >'
     };
@@ -21,7 +21,7 @@ $(document).ready(function() {
         nickname: 'han',
         charName: 'Han Solo',
         healthPoints: 150,
-        attackPoints: 25,
+        attackPoints: 10,
         counterPoints: 20,
         charImage: '<img src="assets/images/characters/hansolo.png" class="image" >'
     };
@@ -31,7 +31,7 @@ $(document).ready(function() {
         nickname: 'lobot',
         charName: 'Lobot',
         healthPoints: 100,
-        attackPoints: 10,
+        attackPoints: 2,
         counterPoints: 10,
         charImage: '<img src="assets/images/characters/lobot.png" class="image" >'
     };
@@ -41,7 +41,7 @@ $(document).ready(function() {
         nickname: 'lando',
         charName: 'Lando Calrissian',
         healthPoints: 120,
-        attackPoints: 15,
+        attackPoints: 5,
         counterPoints: 12,
         charImage: '<img src="assets/images/characters/lando.png" class="image" >'
     };
