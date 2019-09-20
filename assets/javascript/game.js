@@ -76,12 +76,15 @@ $(document).ready(function() {
                 $attacker.append(arg[i].charImage);
                 $attacker.append('<div class="characterHealth">'+arg[i].healthPoints);
                 $attacker.attr('class', 'character col-md-3');
+                $attacker.attr('data_hp', arg[i].healthPoints);
+                $attacker.attr('data_nickname', arg[i].nickname);
 
                 // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
 
                 // Appending the attacker object to the characters section
                 $('#characters').append($attacker);
+
 
             }
         } 
@@ -95,7 +98,7 @@ $(document).ready(function() {
             characters = [];
 
             // Appending a "Remaining Enemies" title
-            $('#remainingEnemies').append('<div class="title">Remaining Enemies</div>')
+            $('#remainingEnemies').append('<div class="title">Remaining Enemies:</div>')
             
             for (var i = 0; i < arg.length; i++){   
                 // Creating jQuery object to store the defender (remaining enemies) div
@@ -103,13 +106,13 @@ $(document).ready(function() {
                 $defender.append('<div class="characterName">'+ arg[i].charName);
                 $defender.append(arg[i].charImage);
                 $defender.append('<div class="characterHealth">'+arg[i].healthPoints);
-                $defender.attr('class', 'character col-md-3');
+                $defender.attr('class', 'enemy');
 
                 // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
 
                 // Appending the defender object to the characters section
-                $('#characters').append($defender);
+                $('#remainingEnemies').append($defender);
             }
         }
         
@@ -125,6 +128,18 @@ $(document).ready(function() {
             // Appending a new title 
             $('#characters').append('<div class="title">Your Character:</div>');
 
+            $chosenCharacter = $(this);
+            $chosenCharacter.addClass('chosenCharacter');
+            $chosenCharacter.removeClass('character col-md-3');
+            $('#characters').append($chosenCharacter);
+            console.log(this);
+
+            var charRemove = characters.indexOf($chosenCharacter.attr('data_nickname'))
+            charactersObjects.splice(charRemove, 1);
+            
+            createCharacters(charactersObjects);
+
+            
         });
     };
 

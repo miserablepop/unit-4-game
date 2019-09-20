@@ -54,3 +54,23 @@ body {
     font-family: 'Space Mono', monospace;
 	font-size: 20px;
 }
+
+.chosenCharacter, .currentEnemy {
+	font-family: 'Space Mono', monospace;
+	font-size: 40px;
+	clear:all;
+	text-align: center;
+	display:block;
+	width:250px;
+	margin: 10px auto;
+}
+
+.enemy {
+	font-family: 'Space Mono', monospace;
+	font-size: 40px;
+	clear:all;
+	text-align: center;
+	display:inline-block;
+	width:250px;
+	margin: 20px auto;
+}
