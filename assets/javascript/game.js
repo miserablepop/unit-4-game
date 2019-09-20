@@ -125,8 +125,6 @@ $(document).ready(function() {
             // Appending a new title 
             $('#characters').append('<div class="title">Your Character:</div>');
 
-            $chosenCharacter = $(this);
-            console.log($chosenCharacter);
         });
     };
 
