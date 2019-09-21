@@ -66,7 +66,6 @@ $(document).ready(function() {
     var currentDefenderCounter = 0;
 
     var compoundAttack = 0;
-    var counter = 0;
 
     var isThereDefender = false;
 
@@ -219,10 +218,10 @@ $(document).ready(function() {
 
             // Alerting if there is no defender chosen            
             $('#attackButton').on('click', function(){
-                if (isThereDefender){
+                if (isThereDefender) {
                     fight();
                 } else {
-                    alert("You need to pick a defender.")
+                    $('#messages').html('You need to pick a new defender.')
                 }
             });
 
@@ -251,7 +250,6 @@ $(document).ready(function() {
         if (currentDefenderHealth <= 0 && attackerHealth > 0){
 
             isThereDefender = false;
-            console.log(attackerHealth);
 
             $('#messages').html('You defeated ' + $currentDefender.attr('data_name') + ', you can choose to fight another enemy.');
 
