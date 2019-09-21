@@ -57,7 +57,17 @@ $(document).ready(function() {
     var $chosenCharacter;
     var $currentDefender;
 
-    var isDefender = false;
+    var attackerHealth;
+    var attackerDamage;
+    var attackerCounter;
+
+    var currentDefenderHealth = 0;
+    var currentDefenderAttack = 0;
+    var currentDefenderCounter = 0;
+
+    var compoundAttack = 0;
+
+    var isThereDefender = false;
 
     // FUNCTIONS
     ///////////////////////////////////////////////////////////////////////////////
@@ -82,7 +92,10 @@ $(document).ready(function() {
                 $attacker.append('<div class="characterHealth">'+arg[i].healthPoints);
                 $attacker.attr('class', 'character col-md-3');
                 $attacker.attr('data_hp', arg[i].healthPoints);
+                $attacker.attr('data_attack', arg[i].attackPoints);
+                $attacker.attr('data_counter', arg[i].counterPoints);
                 $attacker.attr('data_nickname', arg[i].nickname);
+                $attacker.attr('data_name', arg[i].charName);
 
                 // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
@@ -113,14 +126,21 @@ $(document).ready(function() {
                 $defender.append('<div class="characterHealth">'+arg[i].healthPoints);
                 $defender.attr('class', 'defender');
                 $defender.attr('data_hp', arg[i].healthPoints);
+                $defender.attr('data_attack', arg[i].attackPoints);
+                $defender.attr('data_counter', arg[i].counterPoints);
                 $defender.attr('data_nickname', arg[i].nickname);
+                $defender.attr('data_name', arg[i].charName);
 
                 // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
-                console.log($defender);
+                
                 // Appending the defender object to the characters section
                 $('#remainingDefenders').append($defender);
             }
+
+            // if (!$currentDefender) {
+            //     pickDefender();
+            // }
         }  
     };
 
@@ -136,8 +156,13 @@ $(document).ready(function() {
             $chosenCharacter = $(this);
             $chosenCharacter.addClass('chosenCharacter');
             $chosenCharacter.removeClass('character col-md-3');
+
+            attackerHealth = parseInt($chosenCharacter.attr('data_hp'));
+            attackerDamage = parseInt($chosenCharacter.attr('data_attack'));
+            attackerCounter = parseInt($chosenCharacter.attr('data_counter'));
+
             $('#characters').append($chosenCharacter);
-            console.log(this);
+            
 
             var charRemove = characters.indexOf($chosenCharacter.attr('data_nickname'))
             charactersObjects.splice(charRemove, 1);
@@ -149,21 +174,96 @@ $(document).ready(function() {
     };
 
     function pickDefender (){
-        $('#remainingDefenders').on('click', '.defender', function(event){
+        $(document).on('click', '.defender', function(){
             
             $('#characters').empty();
             $('#currentDefender').empty();
-            $('attackButton').empty();
+            $('#attackButton').empty();
+            $('#messages').empty();
 
             $currentDefender = $(this);
+
             $currentDefender.addClass('currentDefender');
             $currentDefender.removeClass('defender');
             
             $('#chosenCharacter').append($chosenCharacter);
+
             $('#attackButton').append('<button type="button" class="btn btn-light">Attack</button>');
+
             $('#currentDefender').append($currentDefender);
+
+            isThereDefender = true;
+
+            var charRemove = characters.indexOf($currentDefender.attr('data_nickname'))
+            charactersObjects.splice(charRemove, 1);
+            
+            createCharacters(charactersObjects);
+
+            currentDefenderAttack = 0;
+            console.log(currentDefenderAttack);
+
+            currentDefenderAttack = parseInt($currentDefender.attr('data_attack'));
+            currentDefenderHealth = parseInt($currentDefender.attr('data_hp'));
+            currentDefenderCounter = parseInt($currentDefender.attr('data_counter'));
+
+            
+            $('#attackButton').on('click', function(){
+                if (isThereDefender){
+                    fight();
+                } else {
+                    alert("You need to pick a defender.")
+                }
+            });
+
+
         });
     };
+
+    function fight (){
+        
+        compoundAttack += attackerDamage;
+        console.log(compoundAttack);
+
+        currentDefenderHealth = currentDefenderHealth - compoundAttack;
+        attackerHealth = attackerHealth - currentDefenderCounter;
+        console.log(currentDefenderHealth);
+        console.log(attackerHealth);
+
+        $('.currentDefender > .characterHealth').html(currentDefenderHealth);
+        $('.chosenCharacter > .characterHealth').html(attackerHealth);
+
+        $('#messages').html('You attacked ' + $currentDefender.attr('data_name') + ' for ' + compoundAttack + ' damage.');
+        $('#messages').append('<br />' + $currentDefender.attr('data_name') + ' attacked you back for ' + $currentDefender.attr('data_counter') + ' damage.');
+
+        if (currentDefenderHealth <=0 && attackerHealth > 0){
+
+            isThereDefender = false;
+            attackerHealth = attackerHealth - currentDefenderAttack;
+            $('#messages').html('You defeated ' + $currentDefender.attr('data_name') + ', you can choose to fight another enemy.');
+
+            $('#currentDefender').empty();
+
+            if (characters.length === 0){
+                $('.newGame').append('<div class="title">You won!!! Game over!!!</div>');
+                restartGame();
+            } else {
+                pickDefender();
+            };
+
+        } else if (attackerHealth <= 0){
+            $('.newGame').append('<div class="title">You were defeated!</div>');
+            restartGame();
+        }
+    };
+
+
+    function restartGame() {
+		$('.row').empty();
+		$('.newGame').append('<button class="restartBtn btn btn-lg btn-warning">Restart Game</button>');
+			$('.restartBtn').on('click', function() {
+				location.reload();
+			})
+	}
 
     startGame();
 });

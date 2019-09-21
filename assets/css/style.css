@@ -83,3 +83,11 @@ body {
 #attackButton {
     margin-top: 125px;
 }
+
+#messages {
+    width: 100%;
+    display: inline-block;
+    margin: 50px;
+    color: white;
+    text-align: center
+}
