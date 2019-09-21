@@ -139,9 +139,9 @@ $(document).ready(function() {
                 $('#remainingDefenders').append($defender);
             }
 
-            // if (!$currentDefender) {
-            //     pickDefender();
-            // }
+            if (!$currentDefender) {
+                pickDefender();
+            }
         }  
     };
 
@@ -179,7 +179,7 @@ $(document).ready(function() {
     };
 
     function pickDefender (){
-        $(document).on('click', '.defender', function(){
+        $('.defender').on('click', function() {
             
             // Clearing out the screen 
             $('#characters').empty();
@@ -189,7 +189,7 @@ $(document).ready(function() {
 
             //Storing the chosen defender into a jQuery object
             $currentDefender = $(this);
-
+            console.log($currentDefender.attr('data_nickname'));
 
             $currentDefender.addClass('currentDefender');
             $currentDefender.removeClass('defender');
@@ -257,6 +257,8 @@ $(document).ready(function() {
 
             $('#currentDefender').empty();
 
+            currentDefenderAttack = 0;
+
             if (characters.length === 0){
                 $('.newGame').append('<div class="title">You won!!! Game over!!!</div>');
                 restartGame();
@@ -282,4 +284,5 @@ $(document).ready(function() {
 
     // Calling function to start game
     startGame();
+
 });
