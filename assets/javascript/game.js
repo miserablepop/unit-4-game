@@ -66,6 +66,7 @@ $(document).ready(function() {
     var currentDefenderCounter = 0;
 
     var compoundAttack = 0;
+    var counter = 0;
 
     var isThereDefender = false;
 
@@ -90,12 +91,12 @@ $(document).ready(function() {
                 $attacker.append('<div class="characterName">'+ arg[i].charName);
                 $attacker.append(arg[i].charImage);
                 $attacker.append('<div class="characterHealth">'+arg[i].healthPoints);
-                $attacker.attr('class', 'character col-md-3');
                 $attacker.attr('data_hp', arg[i].healthPoints);
                 $attacker.attr('data_attack', arg[i].attackPoints);
                 $attacker.attr('data_counter', arg[i].counterPoints);
                 $attacker.attr('data_nickname', arg[i].nickname);
                 $attacker.attr('data_name', arg[i].charName);
+                $attacker.attr('class', 'character col-md-3');
 
                 // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
@@ -124,12 +125,12 @@ $(document).ready(function() {
                 $defender.append('<div class="characterName">'+ arg[i].charName);
                 $defender.append(arg[i].charImage);
                 $defender.append('<div class="characterHealth">'+arg[i].healthPoints);
-                $defender.attr('class', 'defender');
                 $defender.attr('data_hp', arg[i].healthPoints);
                 $defender.attr('data_attack', arg[i].attackPoints);
                 $defender.attr('data_counter', arg[i].counterPoints);
                 $defender.attr('data_nickname', arg[i].nickname);
                 $defender.attr('data_name', arg[i].charName);
+                $defender.attr('class', 'defender');
 
                 // Pushing the character nickname to the characters array
                 characters.push(arg[i].nickname);
@@ -153,20 +154,24 @@ $(document).ready(function() {
             // Appending a new title 
             $('#characters').append('<div class="title">Your Character:</div>');
 
+            // Storing the chosen character into a jQuery variable
             $chosenCharacter = $(this);
             $chosenCharacter.addClass('chosenCharacter');
             $chosenCharacter.removeClass('character col-md-3');
 
+            // Taking the attr and storing them to use for fight()
             attackerHealth = parseInt($chosenCharacter.attr('data_hp'));
             attackerDamage = parseInt($chosenCharacter.attr('data_attack'));
             attackerCounter = parseInt($chosenCharacter.attr('data_counter'));
 
+            // Adding the character
             $('#characters').append($chosenCharacter);
             
-
-            var charRemove = characters.indexOf($chosenCharacter.attr('data_nickname'))
+            // Removing the character from the characters array
+            var charRemove = characters.indexOf($chosenCharacter.attr('data_nickname'));
             charactersObjects.splice(charRemove, 1);
             
+            // Running the createCharacters function
             createCharacters(charactersObjects);
 
             
@@ -176,16 +181,20 @@ $(document).ready(function() {
     function pickDefender (){
         $(document).on('click', '.defender', function(){
             
+            // Clearing out the screen 
             $('#characters').empty();
             $('#currentDefender').empty();
             $('#attackButton').empty();
             $('#messages').empty();
 
+            //Storing the chosen defender into a jQuery object
             $currentDefender = $(this);
+
 
             $currentDefender.addClass('currentDefender');
             $currentDefender.removeClass('defender');
             
+            // Appending the character, button, and, defender to the fight area
             $('#chosenCharacter').append($chosenCharacter);
 
             $('#attackButton').append('<button type="button" class="btn btn-light">Attack</button>');
@@ -194,19 +203,21 @@ $(document).ready(function() {
 
             isThereDefender = true;
 
-            var charRemove = characters.indexOf($currentDefender.attr('data_nickname'))
+            // Removing the chosen defender from the characters array
+            var charRemove = characters.indexOf($currentDefender.attr('data_nickname'));
             charactersObjects.splice(charRemove, 1);
             
+            // Running the createCharacters function
             createCharacters(charactersObjects);
 
             currentDefenderAttack = 0;
-            console.log(currentDefenderAttack);
 
+            // Storing the defender attr for further use in fight()
             currentDefenderAttack = parseInt($currentDefender.attr('data_attack'));
             currentDefenderHealth = parseInt($currentDefender.attr('data_hp'));
             currentDefenderCounter = parseInt($currentDefender.attr('data_counter'));
 
-            
+            // Alerting if there is no defender chosen            
             $('#attackButton').on('click', function(){
                 if (isThereDefender){
                     fight();
@@ -221,24 +232,27 @@ $(document).ready(function() {
 
     function fight (){
         
+        // Setting the compound attack
         compoundAttack += attackerDamage;
-        console.log(compoundAttack);
 
+        // Setting the attack logic
         currentDefenderHealth = currentDefenderHealth - compoundAttack;
         attackerHealth = attackerHealth - currentDefenderCounter;
-        console.log(currentDefenderHealth);
-        console.log(attackerHealth);
 
+        // Updating the attacker and defenders health
         $('.currentDefender > .characterHealth').html(currentDefenderHealth);
         $('.chosenCharacter > .characterHealth').html(attackerHealth);
 
+        // Updating health and attack messages
         $('#messages').html('You attacked ' + $currentDefender.attr('data_name') + ' for ' + compoundAttack + ' damage.');
         $('#messages').append('<br />' + $currentDefender.attr('data_name') + ' attacked you back for ' + $currentDefender.attr('data_counter') + ' damage.');
 
-        if (currentDefenderHealth <=0 && attackerHealth > 0){
+        // Checking to see if the attacker or the defender won
+        if (currentDefenderHealth <= 0 && attackerHealth > 0){
 
             isThereDefender = false;
-            attackerHealth = attackerHealth - currentDefenderAttack;
+            console.log(attackerHealth);
+
             $('#messages').html('You defeated ' + $currentDefender.attr('data_name') + ', you can choose to fight another enemy.');
 
             $('#currentDefender').empty();
@@ -248,7 +262,7 @@ $(document).ready(function() {
                 restartGame();
             } else {
                 pickDefender();
-            };
+            }
 
         } else if (attackerHealth <= 0){
             $('.newGame').append('<div class="title">You were defeated!</div>');
@@ -256,7 +270,7 @@ $(document).ready(function() {
         }
     };
 
-
+    // Restart game button
     function restartGame() {
 		$('.row').empty();
 		$('.newGame').append('<button class="restartBtn btn btn-lg btn-warning">Restart Game</button>');
@@ -265,5 +279,7 @@ $(document).ready(function() {
 			})
 	}
 
+
+    // Calling function to start game
     startGame();
 });
